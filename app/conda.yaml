@@ -1,0 +1,28 @@
+name: aisarch_pipeline
+channels:
+  - conda-forge
+dependencies:
+  - python == 3.8
+  - pip
+  - click
+  - pyspark
+  - pandas
+  - numpy
+  - scikit-learn
+  - termcolor
+  - rasterio
+  - psycopg2
+  - seaborn
+  - h5py
+  - tabulate
+  - tqdm
+  - cython
+  - shapely
+  - fiona
+  - pyarrow
+  - pip:
+    - ogr
+    - mlflow
+    - importlib
+    - happybase
+    - findspark

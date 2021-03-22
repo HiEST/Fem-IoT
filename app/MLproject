@@ -1,0 +1,86 @@
+name: aisarch_pipeline
+
+conda_env: conda.yaml
+
+entry_points:
+  load_metadata:
+    command: 'python src/main.py --job load_metadata --job-args
+                file={ihs_path} output_file={ihs_hdfs}'
+    parameters:
+      ihs_path: path
+      ihs_hdfs: {type: string, default: ""}
+  ingest_csv:
+    command: 'python src/main.py --job ingest_csv --job-args
+                file={ais_path} output_file={ais_hdfs}'
+    parameters:
+      ais_path: path
+      ais_hdfs: {type: string, default: ""}
+  compute_emissions:
+    parameters:
+      ihs_hdfs: path
+      ais_hdfs: path
+      model: {type: string, default: "STEAM2"}
+      step: {type: int, default: 60}
+      unit: {type:string, default: "kg"}
+      interpolation_lim: {type: int, default: 900}
+      ae_on_lim: {type: int, default: 86400}
+      sfoc: {type: string, default: "NAEI"}
+      emis_hdfs: {type: string, default: ""}
+    command: 'python src/main.py --job compute_emissions --job-args
+                input_data={ais_hdfs} input_metadata={ihs_hdfs} model={model}
+                step={step} interpolation_lim={interpolation_lim} unit={unit} 
+                ae_on_lim={ae_on_lim}
+                sfoc={sfoc} output_file={emis_hdfs}'
+  export_postgis:
+    command: 'python src/main.py --job export_postgis 
+                --extra-jars libs/postgresql-42.2.18.jar
+                --job-args input_data={input_data} db={database} table={table}
+                time_col={time_col} table_type={table_type}
+                idx_fields={idx_fields} ihs_table={ihs_table}'
+    parameters:
+      input_data: path
+      database: {type: string, default: "ais"}
+      table: string
+      time_col: {type: string, default: "time"}
+      table_type: {type: string, default: "emis"}
+      idx_fields: {type: string, default: "(imo, type)"}
+      ihs_table: {type: string, default: "ihs"}
+  compare_hermes:
+    command: 'python src/main.py --job compare_hermes 
+                --job-args input_file={input_file} hermes_file={hermes_file} 
+                model={model} output_file={output_file}'
+    parameters:
+      input_file: path
+      hermes_file: {type: string, default: ""}
+      model: {type: string, default: ""}
+      output_file: {type: string, default: ""}
+  generate_rasters:
+    command: "ls"
+  write_rasters:
+    command: "ls"
+  main:
+    command: "python src/pipeline.py
+                --ihs-path {ihs_path} --ihs-hdfs {ihs_hdfs}
+                --ais-path {ais_path} --ais-hdfs {ais_hdfs}
+                --emis-hdfs {emis_hdfs}
+                --step {step} --interpolation_lim {interpolation_lim} 
+                --ae_on_lim {ae_on_lim}
+                --unit {unit} --sfoc {sfoc}
+                --model {model}
+                --export-db {export_db}
+                --hermes-file {hermes_file}"
+    parameters:
+      ihs_path: path
+      ihs_hdfs: {type: string, default: ""}
+      ais_path: path
+      ais_hdfs: {type: string, default: ""}
+      model: {type: string, default: "STEAM,STEAM2"}
+      export_db: {type: bool, default: False}
+      step: {type: int, default: 60}
+      interpolation_lim: {type: int, default: 900}
+      ae_on_lim: {type: int, default: 86400}
+      unit: {type: str, default: "kg"}
+      sfoc: {type: string, default: "NAEI"}
+      emis_hdfs: {type: string, default: ""}
+      hermes_file: {type: string, default: ""}
+
