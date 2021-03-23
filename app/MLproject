@@ -45,6 +45,12 @@ entry_points:
       table_type: {type: string, default: "emis"}
       idx_fields: {type: string, default: "(imo, type)"}
       ihs_table: {type: string, default: "ihs"}
+  export_csv:
+    command: 'python src/main.py --job export_csv 
+                --job-args input_file={input_file} output_file={output_file}'
+    parameters:
+      input_file: path
+      output_file: string
   compare_hermes:
     command: 'python src/main.py --job compare_hermes 
                 --job-args input_file={input_file} hermes_file={hermes_file} 
@@ -68,6 +74,7 @@ entry_points:
                 --unit {unit} --sfoc {sfoc}
                 --model {model}
                 --export-db {export_db}
+                --csv-output {csv_output}
                 --hermes-file {hermes_file}"
     parameters:
       ihs_path: path
@@ -76,6 +83,7 @@ entry_points:
       ais_hdfs: {type: string, default: ""}
       model: {type: string, default: "STEAM,STEAM2"}
       export_db: {type: bool, default: False}
+      csv_output: {type: string, default: ""}
       step: {type: int, default: 60}
       interpolation_lim: {type: int, default: 900}
       ae_on_lim: {type: int, default: 86400}

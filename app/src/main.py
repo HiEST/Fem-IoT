@@ -5,6 +5,7 @@ import os
 import sys
 from shared.msg_types import prt_warn, prt_high, prt_info, prt_err
 
+# PRINT ENV
 try:
     from pyspark.sql import SparkSession
 except ImportError:

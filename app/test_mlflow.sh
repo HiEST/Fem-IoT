@@ -11,9 +11,8 @@
 
 # NO HERMES
 mlflow run . \
-    -P ihs_path=file:///home/fubu/data/IHS/2021-02-24-ihs_data_basic.csv \
-    -P ais_path=file:///home/fubu/data/AIS/AIS2016/abel_2016-01.csv \
+    -P ihs_path=file:///home/agutierrez/data/IHS/2021-02-24-ihs_data_basic.csv \
+    -P ais_path=file:///home/agutierrez/data/AIS/AIS2016/abel_2016-01.csv \
     -P model="STEAM,STEAM2" -P export_db=False -P unit="kg" -P step=60 \
-    -P ae_on_lim=0
-
-
+    -P ae_on_lim=0 \
+    -P csv_output=file:///home/agutierrez/data/calc_emis

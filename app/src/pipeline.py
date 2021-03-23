@@ -99,8 +99,10 @@ def _get_or_run(entrypoint, parameters, git_commit, use_conda=False,
 @click.option("--sfoc", type=str)
 @click.option("--model", type=str)
 @click.option("--export-db", type=bool)
+@click.option("--csv-output", type=str)
 def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
-             step, interpolation_lim, ae_on_lim, unit, sfoc, model, export_db):
+             step, interpolation_lim, ae_on_lim, unit, sfoc, model, export_db,
+             csv_output):
     # Note: The entrypoint names are defined in MLproject.
     # The artifact directories are documented by each step's .py file.
     with mlflow.start_run() as active_run:
@@ -192,7 +194,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
 
         # Export to DB
         if export_db:
-            export_db = list()
+            export_db_l = list()
             for (emis, m) in zip(compute_emissions, model):
                 prt_high("Saving results in DB: {}\n".format(m))
                 emis_parquet_uri = os.path.join(
@@ -202,14 +204,33 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
                     "input_data": emis_parquet_uri,
                     "table": "emis_"+m+"_"+run_id
                 }
-                export_db.append(_get_or_run(
+                export_db_l.append(_get_or_run(
                         "export_postgis", export_db_param, git_commit))
-
             prt_ok("Export DB done.")
-            for (m, run) in zip(model, export_db):
+            for (m, run) in zip(model, export_db_l):
                 prt_info("Model: {}".format(m))
                 prt_mlflow_run(run)
                 log_run_id["run_id_export_db"][m] = run.info.run_id
+
+        # Export to csv
+        if csv_output:  # Path exists, i.e. not ""
+            export_csv_l = list()
+            for (emis, m) in zip(compute_emissions, model):
+                prt_high("Saving results in CSV: {}\n".format(m))
+                emis_parquet_uri = os.path.join(
+                    emis.info.artifact_uri, "emissions.parquet")
+                run_id = emis.info.run_id
+                export_csv_param = {
+                    "input_file": emis_parquet_uri,
+                    "output_file": csv_output+"/emis_"+m+"_"+run_id+".csv"
+                }
+                export_csv_l.append(_get_or_run(
+                        "export_csv", export_csv_param, git_commit))
+            log_run_id["run_id_export_csv"] = dict()
+            for (m, run) in zip(model, export_csv_l):
+                prt_info("Model: {}".format(m))
+                prt_mlflow_run(run)
+                log_run_id["run_id_export_csv"][m] = run.info.run_id
 
         # Compare emis HERMES
         if hermes_file:  # If there is a file specified
