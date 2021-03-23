@@ -1,7 +1,5 @@
-*/__pycache/
-
-*/.ipynb_checkpoints
-
-app/mlruns
+__pycache__
+.ipynb_checkpoints
+mlruns
 
 */.ropeproject
