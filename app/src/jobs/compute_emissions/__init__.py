@@ -12,12 +12,14 @@ from pyspark.sql import SparkSession
 from pyspark.sql import Row
 from pyspark.sql.functions import udf, col, when
 
-from pyspark.sql.types import IntegerType, FloatType
+from pyspark.sql.types import (
+        FloatType, DoubleType, LongType, StructType, StructField, StringType,
+        BooleanType)
 
-from shared.data_cleaning import change_column_type, ensure_columns_type, \
-        count_nulls_steam2
-from shared.equations import calcSOxEmissionFactor, calcCO2EmissionFactor, \
-        calcNOxEmissionFactor, estimateEmission
+from shared.data_cleaning import ensure_columns_type, count_nulls_steam2
+from shared.equations import (
+        calcSOxEmissionFactor, calcCO2EmissionFactor, calcNOxEmissionFactor,
+        estimateEmission)
 
 from shared.models.steam import transient_power_me_steam,\
         transient_power_ae_steam
@@ -63,8 +65,8 @@ def compute_deltas_and_accumulators(seq):
         if prev is None:
             dict['last_move'] = 0
             prev = dict
-        # Assumption: We consider that a ship doesn't move if the speed is lower
-        # than VSafety (Jalkanen 2009)
+        # Assumption: We consider that a ship doesn't move if the speed is
+        # lower than VSafety (Jalkanen 2009)
         if dict['sog'] < 0.5:
             dict['last_move'] = prev['last_move'] + dict['time'] - prev['time']
         else:
@@ -268,14 +270,76 @@ def analyze(spark: SparkSession, input_data='ships_data.parquet',
     grouped = joined.rdd.groupBy(lambda record: record['imo'])
     interpolated = grouped.flatMap(
         lambda d: transform_grouped(d, step, interpolation_lim))
-    new_df = interpolated.toDF()
+    # new_df = interpolated.toDF()
+
+    if model == "STEAM2":
+        interp_schema = StructType([
+            StructField('imo',          LongType(),     True),
+            StructField('nombre',       StringType(),   True),
+            StructField('sog',          DoubleType(),   True),
+            StructField('latitude',     DoubleType(),   True),
+            StructField('longitude',    DoubleType(),   True),
+            StructField('time',         LongType(),     True),
+            StructField('l',            DoubleType(),   True),
+            StructField('b',            DoubleType(),   True),
+            StructField('t',            DoubleType(),   True),
+            StructField('qpc',          DoubleType(),   True),
+            StructField('wet_surf_k',   DoubleType(),   True),
+            StructField('wet_surf_a3',  DoubleType(),   True),
+            StructField('cr_nofn',      DoubleType(),   True),
+            StructField('n_screw',      LongType(),     True),
+            StructField('n_cabin',      LongType(),     True),
+            StructField('n_ref_teu',    LongType(),     True),
+            StructField('design_draft', BooleanType(),  True),
+            StructField('waterline',    DoubleType(),   True),
+            StructField('type',         StringType(),   True),
+            StructField('hermes_type',  StringType(),   True),
+            StructField('me_rpm',       LongType(),     True),
+            StructField('ae_rpm',       LongType(),     True),
+            StructField('inst_pow_me',  DoubleType(),   True),
+            StructField('inst_pow_ae',  DoubleType(),   True),
+            StructField('design_speed', DoubleType(),   True),
+            StructField('sfoc_me',      LongType(),     True),
+            StructField('sfoc_ae',      LongType(),     True),
+            StructField('nulls',        LongType(),     True),
+            StructField('model',        LongType(),     True),
+            StructField('last_move',    LongType(),     True),
+            StructField('d_lat',        DoubleType(),   True),
+            StructField('d_lon',        DoubleType(),   True),
+            StructField('amp_v',        DoubleType(),   True)
+        ])
+    else:
+        # Steam 1
+        interp_schema = StructType([
+            StructField('imo',          LongType(),     True),
+            StructField('nombre',       StringType(),   True),
+            StructField('sog',          DoubleType(),   True),
+            StructField('latitude',     DoubleType(),   True),
+            StructField('longitude',    DoubleType(),   True),
+            StructField('time',         LongType(),     True),
+            StructField('type',         StringType(),   True),
+            StructField('hermes_type',  StringType(),   True),
+            StructField('me_rpm',       LongType(),     True),
+            StructField('ae_rpm',       LongType(),     True),
+            StructField('inst_pow_me',  DoubleType(),   True),
+            StructField('inst_pow_ae',  DoubleType(),   True),
+            StructField('design_speed', DoubleType(),   True),
+            StructField('sfoc_me',      LongType(),     True),
+            StructField('sfoc_ae',      LongType(),     True),
+            StructField('last_move',    LongType(),     True),
+            StructField('d_lat',        DoubleType(),   True),
+            StructField('d_lon',        DoubleType(),   True),
+            StructField('amp_v',        DoubleType(),   True)
+        ])
+
+    new_df = spark.createDataFrame(data=interpolated, schema=interp_schema)
 
     # Setting the schema for the new data
-    new_df = change_column_type(new_df, 'time', IntegerType(), True)
-    new_df = change_column_type(new_df, 'latitude', FloatType(), True)
-    new_df = change_column_type(new_df, 'longitude', FloatType(), True)
-    new_df = change_column_type(new_df, 'sog', FloatType(), True)
-    new_df = change_column_type(new_df, 'imo', IntegerType(), True)
+    # new_df = change_column_type(new_df, 'time', IntegerType(), True)
+    # new_df = change_column_type(new_df, 'latitude', FloatType(), True)
+    # new_df = change_column_type(new_df, 'longitude', FloatType(), True)
+    # new_df = change_column_type(new_df, 'sog', FloatType(), True)
+    # new_df = change_column_type(new_df, 'imo', IntegerType(), True)
     # new_df = change_column_type(new_df, 'd_lat', FloatType(), True)
     # new_df = change_column_type(new_df, 'd_lon', FloatType(), True)
     # new_df = change_column_type(new_df, 'amp_v', FloatType(), True)

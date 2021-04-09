@@ -51,7 +51,11 @@ schema = StructType([
     StructField('build_year', IntegerType()),
     StructField('fuel_type', StringType()),
     StructField('vapour_recovery', StringType()),
+    StructField('mg_total_pow', FloatType()),
+    StructField('ag_total_pow', FloatType()),
     StructField('ae_stroke', StringType()),
+    StructField('mg_pow', FloatType()),
+    StructField('ag_pow', FloatType()),
     StructField('trozzi_fuel_type', StringType()),
     StructField('hermes_type', StringType()),
     StructField('trozzi_type', StringType()),
@@ -91,7 +95,7 @@ def analyze(spark: SparkSession, file='/ships_data/IHSData.txt',
         ##################################
         """.format(file, output_file))
 
-    ihs_table = spark.read.csv(file, header=True, schema=schema, sep='\t',
+    ihs_table = spark.read.csv(file, header=True, schema=schema, sep=',',
                                nullValue='NA')
     ihs_table = clean_data(ihs_table)
     ihs_table.write.mode('overwrite').parquet(output_file)

@@ -42,6 +42,7 @@ def calcNOxEmissionFactor(rpm):
                 res = 9.8
     return res
 
+
 # Default sampling per minute and unit is kg -> kg/minute
 def estimateEmission(factor, power, sampleGranularity=60, unit=1000):
     if power is None or factor is None:
