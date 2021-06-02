@@ -45,8 +45,12 @@ def main(args):
     # Start Spark
     spark = SparkSession.builder\
         .appName(args.job_name)\
-        .config("spark.jars", args.extra_jars)\
-        .getOrCreate()
+        .config("spark.jars", args.extra_jars)
+
+    if args.hdfs:
+        spark = spark.config("spark.hadoop.fs.defaultFS", args.hdfs)
+
+   spark = spark.getOrCreate()
 
     # Set timezone to UTC
     spark.conf.set("spark.sql.session.timeZone", "UTC")
@@ -105,6 +109,10 @@ if __name__ == '__main__':
         parser.add_argument(
             '--extra-jars', type=str, dest='extra_jars', default='',
             help="Extra java jars to be added")
+        parser.add_argument(
+            '--hdfs', type=str, dest='hdfs', default='',
+            help="HDFS endpoint")
+
 
         args = parser.parse_args()
         prt_info("Called with arguments: %s" % args)

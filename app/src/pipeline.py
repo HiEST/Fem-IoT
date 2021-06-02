@@ -86,6 +86,7 @@ def _get_or_run(entrypoint, parameters, git_commit, use_conda=False,
 
 
 @click.command()
+@click.option("--hdfs", type=str)
 @click.option("--ihs-path", type=str)
 @click.option("--ihs-hdfs", type=str)
 @click.option("--ais-path", type=str)
@@ -100,7 +101,7 @@ def _get_or_run(entrypoint, parameters, git_commit, use_conda=False,
 @click.option("--model", type=str)
 @click.option("--export-db", type=bool)
 @click.option("--csv-output", type=str)
-def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
+def workflow(hdfs, ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
              step, interpolation_lim, ae_on_lim, unit, sfoc, model, export_db,
              csv_output):
     # Note: The entrypoint names are defined in MLproject.
@@ -114,7 +115,11 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
 
         # Load IHS
         prt_high("Load IHS")
-        load_metadata_param = {"ihs_path": ihs_path, "ihs_hdfs": ihs_hdfs}
+        load_metadata_param = {
+                "hdfs": hdfs,
+                "ihs_path": ihs_path,
+                "ihs_hdfs": ihs_hdfs
+                }
         load_metadata = _get_or_run(
                 "load_metadata", load_metadata_param, git_commit)
         prt_ok("Load metadata done.")
@@ -123,7 +128,11 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
 
         # Load AIS
         prt_high("Load AIS")
-        ingest_csv_param = {"ais_path": ais_path, "ais_hdfs": ais_hdfs}
+        ingest_csv_param = {
+                "hdfs": hdfs,
+                "ais_path": ais_path,
+                "ais_hdfs": ais_hdfs
+                }
         ingest_csv = _get_or_run("ingest_csv", ingest_csv_param, git_commit)
         prt_ok("Ingest CSV done.")
         prt_mlflow_run(ingest_csv)
@@ -146,6 +155,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
             log_run_id["run_id_export_db"] = dict()
             ihs_table = "ihs"
             export_db_param = {
+                "hdfs": hdfs,
                 "input_data": ihs_hdfs,
                 "table": ihs_table,
                 "table_type": "ihs"
@@ -157,6 +167,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
             # Export AIS
             prt_high("Exporting AIS to DB")
             export_db_param = {
+                "hdfs": hdfs,
                 "input_data": ais_hdfs,
                 "table": "ais",
                 "idx_fields": "(nombre, imo, typeofshipandcargo)",
@@ -178,6 +189,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
         for m in model:
             prt_high("Computing model: {}\n".format(m))
             compute_emissions_param = {
+                    "hdfs": hdfs,
                     "ihs_hdfs": ihs_hdfs, "ais_hdfs": ais_hdfs,
                     "model": m, "step": step,
                     "interpolation_lim": interpolation_lim, "unit": unit,
@@ -201,6 +213,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
                     emis.info.artifact_uri, "emissions.parquet")
                 run_id = emis.info.run_id
                 export_db_param = {
+                    "hdfs": hdfs,
                     "input_data": emis_parquet_uri,
                     "table": "emis_"+m+"_"+run_id
                 }
@@ -221,6 +234,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
                     emis.info.artifact_uri, "emissions.parquet")
                 run_id = emis.info.run_id
                 export_csv_param = {
+                    "hdfs": hdfs,
                     "input_file": emis_parquet_uri,
                     "output_file": csv_output+"/emis_"+m+"_"+run_id+".csv"
                 }
@@ -242,6 +256,7 @@ def workflow(ihs_path, ihs_hdfs, ais_path, ais_hdfs, emis_hdfs, hermes_file,
                     emis.info.artifact_uri, "emissions.parquet")
                 run_id = emis.info.run_id
                 compare_hermes_param = {
+                    "hdfs": hdfs,
                     "input_file": emis_parquet_uri,
                     "hermes_file": hermes_file,
                     "model": m
