@@ -9,10 +9,10 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from shared.msg_types import prt_warn
 
 import sys
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 from shared.msg_types import prt_high, prt_info
 

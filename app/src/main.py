@@ -14,10 +14,10 @@ except ImportError:
     findspark.init()
     from pyspark.sql import SparkSession
 
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 __author__ = 'ekampf & agutierrez'
 
@@ -50,7 +50,7 @@ def main(args):
     if args.hdfs:
         spark = spark.config("spark.hadoop.fs.defaultFS", args.hdfs)
 
-   spark = spark.getOrCreate()
+    spark = spark.getOrCreate()
 
     # Set timezone to UTC
     spark.conf.set("spark.sql.session.timeZone", "UTC")

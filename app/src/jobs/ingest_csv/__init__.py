@@ -13,10 +13,10 @@ from shared.msg_types import prt_warn, prt_high
 
 import tempfile
 
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 
 from numpy import nan

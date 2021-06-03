@@ -28,10 +28,10 @@ from shared.models.steam2 import transient_power_me_steam2,\
 
 from shared.reporting.reporting_funs import log_emission_summary
 
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 
 __author__ = 'agutierrez & denisovlev'

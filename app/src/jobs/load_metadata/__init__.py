@@ -6,10 +6,10 @@ import tempfile
 import sys
 from shared.msg_types import prt_warn, prt_high
 
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 
 __author__ = 'agutierrez & denisovlev'

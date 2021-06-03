@@ -1,0 +1,13 @@
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder\
+    .appName("test")\
+    .config("spark.hadoop.fs.defaultFS", "hdfs://172.15.1.10:9000")\
+    .getOrCreate()
+
+
+file = "hdfs:///data/anon_ihs_test.csv"
+ships_table = spark.read.format('com.databricks.spark.csv')\
+    .options(header='true', inferschema='false', delimiter=';').load(file)
+
+

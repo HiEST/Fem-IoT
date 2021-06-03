@@ -73,6 +73,7 @@ services:
 networks:
   FemIoT:
     driver: bridge
+    name: femiot
     ipam:
       config:
         - subnet: 172.15.1.0/24

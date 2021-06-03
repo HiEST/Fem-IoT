@@ -14,10 +14,10 @@ import matplotlib.pyplot as plt
 
 from shared.reporting.reporting_funs import log_dataframe_metric
 
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 
 __author__ = 'agutierrez'

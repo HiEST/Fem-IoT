@@ -7,10 +7,10 @@ from pyspark.sql.types import TimestampType
 from pyspark.sql.functions import sum, col
 
 
-try:
-    import mlflow
-except ImportError:
-    prt_warn("MLFlow is not installed. Not tracking the experiment.")
+# try:
+#     import mlflow
+# except ImportError:
+#     prt_warn("MLFlow is not installed. Not tracking the experiment.")
 
 
 def group_emis(data, by):
