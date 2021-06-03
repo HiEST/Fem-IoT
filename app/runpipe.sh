@@ -1,5 +1,18 @@
 #!/bin/sh
 
+# Configurable variables
+HDFS_SERVER="hdfs://172.15.1.10:9000"
+# HDFS_SERVER=""
+IHS="hdfs:///data/anon_ihs_test.csv"
+AIS="hdfs:///data/anon_2016-01.csv"
+TMP="hdfs:///data/calc/"
+CSV="hdfs:///data/calc_emis"
+
+
+# Use distributed or not (Spark submit or direct execution of the script)
+DISTRIBUTED=false
+
+
 # Include functions
 runjob_local() {
     printf " with args locally: $1n"
@@ -26,23 +39,6 @@ runjob() {
     hassucceed $? $1
 }
 
-
-# Configurable variables
-
-# HDFS_SERVER=""
-IHS="hdfs:///data/anon_ihs_test.csv"
-AIS="hdfs:///data/anon_2016-01.csv"
-TMP="hdfs:///data/calc/"
-CSV="hdfs:///data/calc_emis"
-
-HDFS_SERVER="hdfs://172.15.1.10:9000"  # used in submit.sh
-
-# Use distributed or not (Spark submit or direct execution of the script)
-DISTRIBUTED=false
-
-
-
-# Script variables
 
 
 ############################## PIPE ############################################
