@@ -1,12 +1,19 @@
 #!/bin/sh
 
 # Configurable variables
-HDFS_SERVER="hdfs://172.15.1.10:9000"
-# HDFS_SERVER=""
-IHS="hdfs:///data/anon_ihs_test.csv"
-AIS="hdfs:///data/anon_2016-01.csv"
-TMP="hdfs:///data/calc/"
-CSV="hdfs:///data/calc_emis"
+# Local
+# HDFS_SERVER="hdfs://172.15.1.10:9000"
+# IHS="hdfs:///data/anon_ihs_test.csv"
+# AIS="hdfs:///data/anon_2016-01.csv"
+# TMP="hdfs:///data/calc/"
+# CSV="hdfs:///data/calc_emis"
+
+# ENMA
+HDFS_SERVER="hdfs://master1.internal:9000"
+IHS="hdfs:///user/ubuntu/emis_femiot/data/anon_ihs_test.csv"
+AIS="hdfs:///user/ubuntu/emis_femiot/data/anon_2016-01.csv"
+TMP="hdfs:///user/ubuntu/emis_femiot/data/calc/"
+CSV="hdfs:///user/ubuntu/emis_femiot/data/calc_emis"
 
 
 # Use distributed or not (Spark submit or direct execution of the script)
