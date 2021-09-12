@@ -64,3 +64,6 @@ runjob "compute_emissions" "model=STEAM2 input_data=${TMP}/ais.parquet
 
 ## Write CSV
 runjob "export_csv" "input_file=${TMP}/emis.parquet output_file=${CSV}"
+
+## Write summary
+runjob "compute_summary" "input_file=${TMP}/emis.parquet"

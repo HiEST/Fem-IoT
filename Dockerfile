@@ -11,7 +11,7 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
 # Copy conda.yaml for installation
 COPY ./app/conda.yaml .
 
-RUN conda env create -f conda.yaml
+RUN conda env create -vv -f conda.yaml
 
 # Make RUN commands use the new environment:
 SHELL ["conda", "run", "-n", "aisarch_pipeline", "/bin/bash", "-c"]

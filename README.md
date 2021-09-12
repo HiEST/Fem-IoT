@@ -15,10 +15,8 @@ The input data and the result output path is stored in the CSV path defined in `
 
 Run using app/runpipe.sh inside the docker machine.
 
-### To Do
-
-- Ouput metrics and plots
-- Save log
+At the end of the execution, a folder named **output** is created, containing
+the emission summaries in csv and lineplots.
 
 ## Building and logging in
 
