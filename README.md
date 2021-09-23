@@ -48,11 +48,6 @@ with the files.
 
 ## Running with testing network
 
-```
-docker run --name fem-iot -it --network=femiot --ip 172.15.1.05 fem-iot /bin/bash
-./runpipe.sh # With the proper configuration
-```
-
 ### Initial setup for the testing framework
 
 ```
@@ -65,6 +60,12 @@ docker cp ../test_data/anon_2016-01.csv datanode:/data
 docker exec -ti datanode /bin/bash
 hdfs dfs -mkdir /data
 hdfs dfs -put /data/*.csv /data/
+```
+
+### Execution
+```
+docker run --name fem-iot -it --network=femiot --ip 172.15.1.05 fem-iot /bin/bash
+./runpipe.sh # With the proper configuration
 ```
 
 ## Output
