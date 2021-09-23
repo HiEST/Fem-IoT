@@ -67,4 +67,8 @@ hdfs dfs -mkdir /data
 hdfs dfs -put /data/*.csv /data/
 ```
 
+## Output
 
+After executing `runpipe.sh` the resulting emissions will be available in the `output` folder. The plots will be available in `output/plot`. 
+
+The results show aggregations of the emissions by day, day of the week, week and month.
