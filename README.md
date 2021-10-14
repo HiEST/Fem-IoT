@@ -33,18 +33,16 @@ docker run --name fem-iot -it fem-iot /bin/bash
 
 ### Initial setup 
 
-Copy the `../test_data/` CSVs into the desired HDFS path. By default:
+Copy the `../test_data/` CSVs into the desired HDFS path. For example:
 ```
 IHS="hdfs:///user/ubuntu/emis_femiot/data/anon_ihs_test.csv"
 AIS="hdfs:///user/ubuntu/emis_femiot/data/anon_2016-01.csv"
 ```
 
-Make sure that this and the output folders exists before running.
+**Make sure that this and the output folders exists before running.**
 
-In the `runpipe.sh` script you will find where to specify the HDFS URL along
-with the files.
-
-
+    
+    
 ## Running with testing network
 
 ```
@@ -65,4 +63,22 @@ hdfs dfs -mkdir /data
 hdfs dfs -put /data/*.csv /data/
 ```
 
+### Execution
 
+`runpipe.sh` script has the following parameters:
+    - `HDFS_SERVER`: HDFS server endpoint. Example: "hdfs://172.15.1.10:9000"
+    - `IHS`: Path to the IHS dataset inside of HDFS. Example: "hdfs:///data/anon_ihs_test.csv"
+    - `AIS`: Path to the IHS dataset inside of HDFS. Example: "hdfs:///data/anon_2016-01.csv"
+    - `TMP`: Path for the intermediate calculations. Example: "hdfs:///data/calc/"
+    - `OUT`: Path where the output is stored. Example: "hdfs:///data/calc_emis"
+
+You should input the parameters in the following way:
+```
+docker run --name fem-iot -it --network=femiot --ip 172.15.1.05 fem-iot /bin/bash
+./runpipe.sh HDFS_SERVER="ServerURL" IHS="IHSFile" AIS="AISFile" TMP="TMPFolder" OUT="OUTFolder
+```
+
+With the example infrastructure:
+```
+./runpipe.sh HDFS_SERVER="hdfs://172.15.1.10:9000" IHS="hdfs:///data/anon_ihs_test.csv" AIS="hdfs:///data/anon_2016-01.csv" TMP="hdfs:///data/calc/" OUT="hdfs:///data/calc_emis"
+```
