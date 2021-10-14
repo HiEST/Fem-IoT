@@ -61,9 +61,9 @@ hdfs dfs -put /data/*.csv /data/
 ```
 
 ### Execution
-<<<<<<< HEAD
 
 `runpipe.sh` script has the following parameters:
+
     - `HDFS_SERVER`: HDFS server endpoint. Example: "hdfs://172.15.1.10:9000"
     - `IHS`: Path to the IHS dataset inside of HDFS. Example: "hdfs:///data/anon_ihs_test.csv"
     - `AIS`: Path to the IHS dataset inside of HDFS. Example: "hdfs:///data/anon_2016-01.csv"
@@ -80,15 +80,9 @@ With the example infrastructure:
 ```
 ./runpipe.sh HDFS_SERVER="hdfs://172.15.1.10:9000" IHS="hdfs:///data/anon_ihs_test.csv" AIS="hdfs:///data/anon_2016-01.csv" TMP="hdfs:///data/calc/" OUT="hdfs:///data/calc_emis"
 ```
-=======
-```
-docker run --name fem-iot -it --network=femiot --ip 172.15.1.05 fem-iot /bin/bash
-./runpipe.sh # With the proper configuration
-```
 
 ## Output
 
 After executing `runpipe.sh` the resulting emissions will be available in the `output` folder. The plots will be available in `output/plot`. 
 
 The results show aggregations of the emissions by day, day of the week, week and month.
->>>>>>> 30b2fd571f3f5b2dc3bf45a910b3b4ea0a711808
