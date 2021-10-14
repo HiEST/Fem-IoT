@@ -6,18 +6,58 @@
 # IHS="hdfs:///data/anon_ihs_test.csv"
 # AIS="hdfs:///data/anon_2016-01.csv"
 # TMP="hdfs:///data/calc/"
-# CSV="hdfs:///data/calc_emis"
+# OUT="hdfs:///data/calc_emis"
 
 # ENMA
-HDFS_SERVER="hdfs://master1.internal:9000"
-IHS="hdfs:///user/ubuntu/emis_femiot/data/anon_ihs_test.csv"
-AIS="hdfs:///user/ubuntu/emis_femiot/data/anon_2016-01.csv"
-TMP="hdfs:///user/ubuntu/emis_femiot/data/calc/"
-CSV="hdfs:///user/ubuntu/emis_femiot/data/calc_emis"
+# HDFS_SERVER="hdfs://master1.internal:9000"
+# IHS="hdfs:///user/ubuntu/emis_femiot/data/anon_ihs_test.csv"
+# AIS="hdfs:///user/ubuntu/emis_femiot/data/anon_2016-01.csv"
+# TMP="hdfs:///user/ubuntu/emis_femiot/data/calc/"
+# OUT="hdfs:///user/ubuntu/emis_femiot/data/calc_emis"
 
+
+PARAM_COUNT=0
+NUM_PARAM=5
 
 # Use distributed or not (Spark submit or direct execution of the script)
 DISTRIBUTED=false
+
+# Argument parsing
+for ARGUMENT in "$@"
+do
+
+    KEY=$(echo $ARGUMENT | cut -f1 -d=)
+    VALUE=$(echo $ARGUMENT | cut -f2 -d=)   
+
+    case "$KEY" in
+        HDFS_SERVER)    HDFS_SERVER=${VALUE}; let "PARAM_COUNT+=1";;
+        IHS)            IHS=${VALUE}; let "PARAM_COUNT+=1";;
+        AIS)            AIS=${VALUE}; let "PARAM_COUNT+=1";;
+        TMP)            TMP=${VALUE}; let "PARAM_COUNT+=1";;
+        OUT)            OUT=${VALUE}; let "PARAM_COUNT+=1";;
+        *)   
+    esac    
+
+
+done
+
+echo $PARAM_COUNT
+# Exit if params are not given
+if [ $PARAM_COUNT -lt $NUM_PARAM ]
+then
+    echo "Incorrect number of paremeters"
+    echo "Usage: ./runpipe.sh HDFS_SERVER=\"Server\" IHS=\"IHS file\" AIS=\"AIS File\" TMP=\"Temporary Folder\" OUT=\"Output Folder\""
+    exit
+fi
+
+echo
+echo "Running pipeline..."
+echo " - Server: $HDFS_SERVER"
+echo " - IHS Input: $IHS"
+echo " - AIS Input: $AIS"
+echo " - Temporary folder: $TMP"
+echo " - Output folder: $OUT"
+echo
 
 
 # Include functions
@@ -63,7 +103,7 @@ runjob "compute_emissions" "model=STEAM2 input_data=${TMP}/ais.parquet
         step=10 interpolation_lim=900"
 
 ## Write CSV
-runjob "export_csv" "input_file=${TMP}/emis.parquet output_file=${CSV}"
+runjob "export_csv" "input_file=${TMP}/emis.parquet output_file=${OUT}"
 
 ## Write summary
 runjob "compute_summary" "input_file=${TMP}/emis.parquet"
