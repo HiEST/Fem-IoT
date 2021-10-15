@@ -33,10 +33,10 @@ def group_emis(data, by):
                 sum(col('nox_ae')).alias('nox_ae'),
                 sum(col('sox_ae')).alias('sox_ae'),
                 sum(col('co2_ae')).alias('co2_ae'))\
-            .orderBy(by)\
-            .toPandas()
-    data = data.add_prefix(by+'_')
-    return(data)
+            .orderBy(by)
+    # Add prefix to column names
+    data_rn = data.select([col(c).alias(by+"_"+c) for c in data.columns])
+    return(data_rn)
 
 
 def log_dataframe_metric(df, column):
@@ -104,7 +104,7 @@ def mkdir_if_not_exist(path):
         os.mkdir(path)
 
 
-def log_emission_summary_csv(emis, path):
+def log_emission_summary_csv(emis, hdfs_path, plot_path):
     # Add ME and AE
     emis = emis\
             .withColumn('trans_p', col('trans_p_me') + col('trans_p_ae'))\
@@ -125,7 +125,7 @@ def log_emission_summary_csv(emis, path):
                 sum(col('co2_ae')).alias('total_co2_me'),
                 sum(col('nox_ae')).alias('total_nox_ae'),
                 sum(col('sox_ae')).alias('total_sox_ae'),
-                sum(col('co2_ae')).alias('total_co2_ae')).toPandas()
+                sum(col('co2_ae')).alias('total_co2_ae'))
 
     # Generate time features
     emis = emis.withColumn('time', emis.time.cast(dataType=TimestampType()))
@@ -142,26 +142,30 @@ def log_emission_summary_csv(emis, path):
 
     prt_high("Generated summary. Logging it.")
 
+    def save_csv(df, path):
+        df\
+            .coalesce(1)\
+            .write.csv(path, header=True, mode='overwrite')
+
+    # Saving CSVs in HDFS - coalesce(1) makes the csv to be saved as one file
+    save_csv(all, hdfs_path+"/emis.csv")
+    save_csv(day_df, hdfs_path+"/day.csv")
+    save_csv(week_df, hdfs_path+"/week.csv")
+    save_csv(month_df, hdfs_path+"/month.csv")
+    save_csv(dayofweek_df, hdfs_path+"/dayofweek.csv")
+
     # Make directories
-    mkdir_if_not_exist(path)
-    mkdir_if_not_exist(path+"/plot")
-    mkdir_if_not_exist(path+"/plot/day")
-    mkdir_if_not_exist(path+"/plot/week")
-    mkdir_if_not_exist(path+"/plot/month")
-    mkdir_if_not_exist(path+"/plot/dayofweek")
+    mkdir_if_not_exist(plot_path)
+    mkdir_if_not_exist(plot_path+"/plot")
+    mkdir_if_not_exist(plot_path+"/plot/day")
+    mkdir_if_not_exist(plot_path+"/plot/week")
+    mkdir_if_not_exist(plot_path+"/plot/month")
+    mkdir_if_not_exist(plot_path+"/plot/dayofweek")
 
-    # Log everything
-    # Save emis, day_df, week_df, month_df, dayofweek_df (pandas df)
-    all.to_csv(path+"/emis.csv")
-
-    day_df.to_csv(path+"/day.csv")
-    plot_summary(day_df, path+"/plot/day", x="day_day")
-
-    week_df.to_csv(path+"/week.csv")
-    plot_summary(week_df, path+"/plot/week", x="week_week")
-
-    month_df.to_csv(path+"/month.csv")
-    plot_summary(month_df, path+"/plot/month", x="month_month")
-
-    dayofweek_df.to_csv(path+"/dayofweek.csv")
-    plot_summary(dayofweek_df, path+"/plot/dayofweek", x="dayofweek_dayofweek")
+    # Save plots in the container
+    plot_summary(day_df.toPandas(), plot_path+"/plot/day", x="day_day")
+    plot_summary(week_df.toPandas(), plot_path+"/plot/week", x="week_week")
+    plot_summary(month_df.toPandas(), plot_path+"/plot/month", x="month_month")
+    plot_summary(
+            dayofweek_df.toPandas(), plot_path+"/plot/dayofweek",
+            x="dayofweek_dayofweek")

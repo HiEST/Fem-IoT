@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Configurable variables
 # Local
@@ -30,11 +30,11 @@ do
     VALUE=$(echo $ARGUMENT | cut -f2 -d=)   
 
     case "$KEY" in
-        HDFS_SERVER)    HDFS_SERVER=${VALUE}; let "PARAM_COUNT+=1";;
-        IHS)            IHS=${VALUE}; let "PARAM_COUNT+=1";;
-        AIS)            AIS=${VALUE}; let "PARAM_COUNT+=1";;
-        TMP)            TMP=${VALUE}; let "PARAM_COUNT+=1";;
-        OUT)            OUT=${VALUE}; let "PARAM_COUNT+=1";;
+        HDFS_SERVER)    HDFS_SERVER=${VALUE}; ((PARAM_COUNT++));;
+        IHS)            IHS=${VALUE}; ((PARAM_COUNT++));;
+        AIS)            AIS=${VALUE}; ((PARAM_COUNT++));;
+        TMP)            TMP=${VALUE}; ((PARAM_COUNT++));;
+        OUT)            OUT=${VALUE}; ((PARAM_COUNT++));;
         *)   
     esac    
 
@@ -106,4 +106,4 @@ runjob "compute_emissions" "model=STEAM2 input_data=${TMP}/ais.parquet
 runjob "export_csv" "input_file=${TMP}/emis.parquet output_file=${OUT}"
 
 ## Write summary
-runjob "compute_summary" "input_file=${TMP}/emis.parquet"
+runjob "compute_summary" "input_file=${TMP}/emis.parquet hdfs_path=${OUT}"

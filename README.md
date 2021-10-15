@@ -60,6 +60,14 @@ hdfs dfs -mkdir /data
 hdfs dfs -put /data/*.csv /data/
 ```
 
+### Running the testing framework
+Inside of `docker_hadoop` folder:
+```
+docker-compose up
+```
+
+Notice that it will take a while to boot.
+
 ### Execution
 
 `runpipe.sh` script has the following parameters:
