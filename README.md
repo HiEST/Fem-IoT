@@ -4,6 +4,10 @@ FemIoT repo for WP5
 
 ## Emission application
 
+### Background
+
+### Technical details
+
 This application computes the emissions produced by the ships given as input.
 The defaulta parameters are defined in the code and in the `runpipe.sh` file.
 
@@ -18,21 +22,23 @@ Run using app/runpipe.sh inside the docker machine.
 At the end of the execution, a folder named **output** is created, containing
 the emission summaries in csv and lineplots.
 
-## Building and logging in
+## Running
+
+### Building and logging in
 
 ```
 docker build -t fem-iot .
 docker run --name fem-iot -it fem-iot /bin/bash
 ```
 
-## Running without network
+### Running without network
 
 ```
 docker run --name fem-iot -it fem-iot /bin/bash
 ./runpipe.sh # With the proper configuration
 ```
 
-### Initial setup 
+#### Initial setup 
 
 Copy the `../test_data/` CSVs into the desired HDFS path. For example:
 ```
@@ -44,9 +50,18 @@ AIS="hdfs:///user/ubuntu/emis_femiot/data/anon_2016-01.csv"
 
     
     
-## Running with testing network
+### Running with testing network
 
-### Initial setup for the testing framework
+#### Running the testing framework
+Inside of `docker_hadoop` folder:
+```
+docker-compose up
+```
+
+Notice that it will take a while to boot.
+
+
+#### Initial setup for the testing framework
 
 ```
 docker exec datanode mkdir /data
@@ -60,15 +75,9 @@ hdfs dfs -mkdir /data
 hdfs dfs -put /data/*.csv /data/
 ```
 
-### Running the testing framework
-Inside of `docker_hadoop` folder:
-```
-docker-compose up
-```
 
-Notice that it will take a while to boot.
 
-### Execution
+## Execution
 
 `runpipe.sh` script has the following parameters:
 
