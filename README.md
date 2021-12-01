@@ -53,10 +53,46 @@ TODO: Define input CSVs
 
 ##### Input format
 
+###### AIS
+The input data should contain the following attributes obtained from AIS
+messages:
+
+
+- nombre: Ship's name
+- imo: IMO ID
+- mmsi: MMSI ID
+- size_a: Size A (check diagram below)
+- size_b: Size B (check diagram below)
+- size_c: Size C (check diagram below)
+- size_d: Size D (check diagram below)
+- eslora: Overall length (meters)
+- manga: Beam (meters)
+- draught: Draft (meters)
+- sog: Speed over Ground/Current speed (knots)
+- cog: Course over Ground (degrees)
+- rot: Current rotation (degrees)
+- heading: Ships true heading (degrees)
+- navstatus: Navigational status (e.g. Underway using engine)
+- typeofshipandcargo: Type of ship and cargo being transported. Check the types
+  [here](https://api.vtexplorer.com/docs/ref-aistypes.html)
+- latitude: Current latitude (degrees)
+- longitude: Current longitude (degrees)
+- fechahora: Timestamp. Format: YYYY-MM-DD hh:mm:ss
+
+![Size disposition](doc/ship_dimen.gif)
+Size attributes (A,B,C and D) in AIS messages. International Telecommunications
+Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
 
 | nombre     | imo | mmsi | size_a | size_b | size_c | size_d | eslora | manga | draught | sog  | cog | rot | heading | navstatus | typeofshipandcargo | latitude         | longitude | fechahora           |
 | ------     | --- | ---- | ------ | ------ | ------ | ------ | ------ | ----- | ------- | ---  | --- | --- | ------- | --------- | ------------------ | --------         | --------- | ---------           |
 | Magic Ship | 0   | 33   | 20     | 170    | 5      | 20     | 190    | 25    | 5.5     | 19.8 | 358 | 0   | 356     | 0         | 60                 | 40.7606616666667 | 2.21904   | 2016-01-16 16:37:11 |
+
+
+###### Ship registry data
+
+
+|imo|name|type|me_stroke|me_rpm|prop_rpm|loa|lbp|l|b|t|los|lwl|ta|tf|bulbous_bow|n_thru|inst_pow_me|n_inst_me|single_pow_me|eng_type|inst_pow_ae|design_speed|n_ref_teu|n_cabin|serv_pow_me|serv_single_pow_me|ae_rpm|n_screw|n_rudd|n_brac|n_boss|design_draft|build_year|fuel_type|vapour_recovery|mg_total_pow|ag_total_pow|ae_stroke|mg_pow|ag_pow|trozzi_fuel_type|hermes_type|trozzi_type|eng_type2|naei_sfoc_me|naei_sfoc_ae|steam_sfocbase_me|steam_sfocbase_ae|waterline|dp|wet_surf_a3|wet_surf_k|cr_nofn|qpc|
+|0|Magic Ship|Passenger/Ro-Ro Cargo Ship|4|500|180|190.5|177|190.5|26|6.3|183.75|183.75|6.3|6.3|TRUE|2|18006|3|9003|Oil|3420|21.4|0|96|14404.8|7202.4|514|2|2|2|2|TRUE|2010|LG|FALSE|NA|7830|4|NA|5840|LNG|FE|Passenger|MSD|166|166|260|220|183.75|4.87587943144907|4331.82903|2307.28172268374|0.654888360161353|0.600525575478299|
 
 ##### Output format
 
