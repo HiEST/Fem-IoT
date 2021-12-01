@@ -80,6 +80,7 @@ messages:
 - fechahora: Timestamp. Format: YYYY-MM-DD hh:mm:ss
 
 ![Size disposition](doc/ship_dimen.gif)
+
 Size attributes (A,B,C and D) in AIS messages. International Telecommunications
 Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
 
@@ -89,6 +90,63 @@ Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
 
 
 ###### Ship registry data
+
+- imo: IMO ID
+- name: Ship name
+- type: Ship type
+- me_stroke: Main Engine stroke stages (integer)
+- me_rpm: Main Engine RPM
+- prop_rpm: Propeller RPM
+- loa: Length Over All (meters)
+- lbp: Length Between Parallels (meters)
+- l: Length (meters)
+- b: Beam (meters)
+- t: Draft (meters)
+- los: Length over surface as defined by Hollenbach (1997,1998) (meters) 
+- lwl: Waterline length (meters)
+- ta: Draft at the aft perpendicular (meters)
+- tf: Draft at the forward perpendicular (meters)
+- bulbous_bow: Wether the ship has a bulbous bow or not (boolean)
+- n_thru: Number of thrusters (integer)
+- inst_pow_me: Total power installed as Main Engine (Kw)
+- n_inst_me: Number of Main Engines installed (integer)
+- single_pow_me: Power of a single Main Engine (Kw)
+- eng_type: Type of engine as defined in the registry [Oil, Gas, Turbine]
+- inst_pow_ae: Total power installed as Auxiliary Engine (Kw)
+- design_speed: Maximum speed of the ship (knots)
+- n_ref_teu: Number of refrigerated TEUs (integer)
+- n_cabin: Number of cabins (integer)
+- serv_pow_me: Total service power of the Main Engine (Jalkanen 2009, 80% of the installed power)
+- serv_single_pow_me: Service power a single Main Engine (Jalkanen 2009, 80% of the installed power)
+- ae_rpm: Auxiliary Engine RPM
+- n_screw: Number of screws (integer)
+- n_rudd: Number of rudders (integer)
+- n_brac: Number of brackets (integer)
+- n_boss: Number of bossings (integer)
+- design_draft: wether the ship has design draft or not (boolean)
+- build_year: year in which the ship was built (integer)
+- fuel_type: type of fuel the ship uses [YY, DF, RF, LG, GB]
+- vapour_recovery: wether the ship has a vapour recovery or not (boolean)
+- mg_total_pow: Main Generator total power (Kw)
+- ag_total_pow: Auxiliary Generator total power (Kw)
+- ae_stroke: Auxiliary Engine stroke stages (integer)
+- mg_pow: Main Generator power (Kw)
+- ag_pow: Auxiliary Generator power (Kw)
+- trozzi_fuel_type: Type of fuel following Trozzi 2010 Table 7 [MDO, BFO, HFO, LNG]
+- hermes_type: Type of the ship following the nomenclature of HERMESv3 [OT, FE, CR, GC, DC, LC, TU, RO, CC, OC]
+- trozzi_type: Type of the ship following the nomenclature of Trozzi 2010 [Others, Passenger, General cargo, Dry bulk carriers, Liquid bulk ships, Tugs, Fishing, Ro Ro cargo, Container]
+- eng_type2: Engine type regarding speed (diesel, steam and gas) [HSD, MSD, SSD, ST, GT]
+- naei_sfoc_me: Specific Fuel Oil Consumtion for Main Engine following NAEI methodology (g/kWh)
+- naei_sfoc_ae: Specific Fuel Oil Consumtion for Auxiliary Engine following NAEI methodology (g/kWh)
+- steam_sfocbase_me: Specific Fuel Oil Consumtion for Main Engine following STEAM methodology (g/kWh)
+- steam_sfocbase_ae: Specific Fuel Oil Consumtion for Auxiliary Engine following STEAM methodology (g/kWh)
+- waterline: Waterline length (meters)
+- dp
+- wet_surf_a3: Wet surface a3 coefficient following Hollenbach 1998 approach
+- wet_surf_k: Wet surface k coefficient following Hollenbach 1998 approach
+- cr_nofn: Resistance coefficient without Froude Number following Hollenbach 1998 approach
+- qpc: Quasi-propulsive constant as defined in Jalkanen 2012
+
 
 
 |imo|name|type|me_stroke|me_rpm|prop_rpm|loa|lbp|l|b|t|los|lwl|ta|tf|bulbous_bow|n_thru|inst_pow_me|n_inst_me|single_pow_me|eng_type|inst_pow_ae|design_speed|n_ref_teu|n_cabin|serv_pow_me|serv_single_pow_me|ae_rpm|n_screw|n_rudd|n_brac|n_boss|design_draft|build_year|fuel_type|vapour_recovery|mg_total_pow|ag_total_pow|ae_stroke|mg_pow|ag_pow|trozzi_fuel_type|hermes_type|trozzi_type|eng_type2|naei_sfoc_me|naei_sfoc_ae|steam_sfocbase_me|steam_sfocbase_ae|waterline|dp|wet_surf_a3|wet_surf_k|cr_nofn|qpc|
