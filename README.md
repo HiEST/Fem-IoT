@@ -91,6 +91,8 @@ Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
 
 ###### Ship registry data
 
+Ship registry data should contain the following attributes:
+
 - imo: IMO ID
 - name: Ship name
 - type: Ship type
