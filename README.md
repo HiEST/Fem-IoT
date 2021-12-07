@@ -231,4 +231,105 @@ folder configured as output (`OUT`) folder. The plots will be available in
 The results show aggregations of the emissions by day, day of the week, week and month.
 
 ### Output data format
-TODO: Define the output format
+
+Depending on which model is used (STEAM or STEAM2), the output will be
+different. In the following subsections we define the output for each model.
+
+#### STEAM
+
+- imo: IMO id
+- nombre: Ship name
+- sog: Speed over Ground/Current speed (knots)
+- latitude: Current latitude (degrees)
+- longitude: Current longitude (degrees)
+- time: Timestamp in seconds from Epoch (integer)
+- type: Ship type (string)
+- hermes_type: Type of the ship following the nomenclature of HERMESv3 [OT, FE, CR, GC, DC, LC, TU, RO, CC, OC]
+- me_rpm: Main Engine RPM
+- ae_rpm: Auxiliary Engine RPM
+- inst_pow_me: Total power installed as Main Engine (Kw)
+- inst_pow_ae: Total power installed as Auxiliary Engine (Kw)
+- design_speed: Maximum speed of the ship (knots)
+- sfoc_me: Used Specific Fuel Oil Consumtion for Main Engine (g/kWh)
+- sfoc_ae: Used Specific Fuel Oil Consumtion for Auxiliary Engine (g/kWh)
+- last_move: How many samples we have received since the ship moved last time (integer)
+- d_lat: Deprecated
+- d_lon: Deprecated
+- amp_v: Deprecated
+- trans_p_me: Transient Main Engine power. Power being used now. (kWh)
+- trans_p_ae: Transient Auxiliary Engine power. Power being used now. (kWh)
+- sox_fact_me: Used SOx emission factor for the Main Engine (g/kWh)
+- sox_fact_ae: Used SOx emission factor for the Auxiliary Engine (g/kWh)
+- co2_fact_me: Used CO2 emission factor for the Main Engine (g/kWh)
+- co2_fact_ae: Used CO2 emission factor for the Auxiliary Engine (g/kWh)
+- nox_fact_me: Used NOX emission factor for the Main Engine (g/kWh)
+- nox_fact_ae: Used NOX emission factor for the Auxiliary Engine (g/kWh)
+- sox_me: Amount of SOx emitted by the Main Engine (unit specified in the config)
+- sox_ae: Amount of SOx emitted by the Auxiliary Engine (unit specified in the config)
+- co2_me: Amount of CO2 emitted by the Main Engine (unit specified in the config)
+- co2_ae: Amount of CO2 emitted by the Auxiliary Engine (unit specified in the config)
+- nox_me: Amount of NOx emitted by the Main Engine (unit specified in the config)
+- nox_ae: Amount of NOx emitted by the Auxiliary Engine (unit specified in the config)
+
+|imo|nombre|sog|latitude|longitude|time|type|hermes_type|me_rpm|ae_rpm|inst_pow_me|inst_pow_ae|design_speed|sfoc_me|sfoc_ae|last_move|d_lat|d_lon|amp_v|trans_p_me|trans_p_ae|sox_fact_me|sox_fact_ae|co2_fact_me|co2_fact_ae|nox_fact_me|nox_fact_ae|sox_me|sox_ae|co2_me|co2_ae|nox_me|nox_ae|
+|---|------|---|--------|---------|----|----|-----------|------|------|-----------|-----------|------------|-------|-------|---------|-----|-----|-----|----------|----------|-----------|-----------|-----------|-----------|-----------|-----------|------|------|------|------|------|------|
+|0|Magic Ship|19.700000762939453|40.76514434814453|2.2187983989715576|1452962280|Passenger/Ro-Ro Cargo Ship|FE|500|514|18006.0|3420.0|21.399999618530273|166|166|0|0.0|0.0|0.0|10485.126|3420.0|0.33165503|0.33165503|517.04|517.04|12.984299|12.912785|0.05795741|0.018904336|90.35382|29.47128|2.2690334|0.73602873|
+
+
+
+
+#### STEAM2
+
+- imo: IMO id
+- nombre: Ship name
+- sog: Speed over Ground/Current speed (knots)
+- latitude: Current latitude (degrees)
+- longitude: Current longitude (degrees)
+- time: Timestamp in seconds from Epoch (integer)
+- l: Length (meters)
+- b: Beam (meters)
+- t: Draft (meters)
+- qpc: Quasi-propulsive constant as defined in Jalkanen 2012
+- wet_surf_k: Wet surface k coefficient following Hollenbach 1998 approach
+- wet_surf_a3: Wet surface a3 coefficient following Hollenbach 1998 approach
+- cr_nofn: Resistance coefficient without Froude Number following Hollenbach 1998 approach
+- n_screw: Number of screws (integer)
+- n_cabin: Number of cabins (integer)
+- n_ref_teu: Number of refrigerated TEUs (integer)
+- design_draft: wether the ship has design draft or not (boolean)
+- waterline: Waterline length (meters)
+- type: Ship type (string)
+- hermes_type: Type of the ship following the nomenclature of HERMESv3 [OT, FE, CR, GC, DC, LC, TU, RO, CC, OC]
+- me_rpm: Main Engine RPM
+- ae_rpm: Auxiliary Engine RPM
+- inst_pow_me: Total power installed as Main Engine (Kw)
+- inst_pow_ae: Total power installed as Auxiliary Engine (Kw)
+- design_speed: Maximum speed of the ship (knots)
+- sfoc_me: Used Specific Fuel Oil Consumtion for Main Engine (g/kWh)
+- sfoc_ae: Used Specific Fuel Oil Consumtion for Auxiliary Engine (g/kWh)
+- nulls: Number of attributes without value (integer)
+- model: Estimation model used for this sample [STEAM, STEAM2]
+- last_move: How many samples we have received since the ship moved last time (integer)
+- d_lat: Deprecated
+- d_lon: Deprecated
+- amp_v: Deprecated
+- trans_p_me: Transient Main Engine power. Power being used now. (kWh)
+- trans_p_ae: Transient Auxiliary Engine power. Power being used now. (kWh)
+- sox_fact_me: Used SOx emission factor for the Main Engine (g/kWh)
+- sox_fact_ae: Used SOx emission factor for the Auxiliary Engine (g/kWh)
+- co2_fact_me: Used CO2 emission factor for the Main Engine (g/kWh)
+- co2_fact_ae: Used CO2 emission factor for the Auxiliary Engine (g/kWh)
+- nox_fact_me: Used NOX emission factor for the Main Engine (g/kWh)
+- nox_fact_ae: Used NOX emission factor for the Auxiliary Engine (g/kWh)
+- sox_me: Amount of SOx emitted by the Main Engine (unit specified in the config)
+- sox_ae: Amount of SOx emitted by the Auxiliary Engine (unit specified in the config)
+- co2_me: Amount of CO2 emitted by the Main Engine (unit specified in the config)
+- co2_ae: Amount of CO2 emitted by the Auxiliary Engine (unit specified in the config)
+- nox_me: Amount of NOx emitted by the Main Engine (unit specified in the config)
+- nox_ae: Amount of NOx emitted by the Auxiliary Engine (unit specified in the config)
+
+|imo|nombre|sog|latitude|longitude|time|l|b|t|qpc|wet_surf_k|wet_surf_a3|cr_nofn|n_screw|n_cabin|n_ref_teu|design_draft|waterline|type|hermes_type|me_rpm|ae_rpm|inst_pow_me|inst_pow_ae|design_speed|sfoc_me|sfoc_ae|nulls|model|last_move|d_lat|d_lon|amp_v|trans_p_me|trans_p_ae|sox_fact_me|sox_fact_ae|co2_fact_me|co2_fact_ae|nox_fact_me|nox_fact_ae|sox_me|sox_ae|co2_me|co2_ae|nox_me|nox_ae|
+|---|------|---|--------|---------|----|-|-|-|---|----------|-----------|-------|-------|-------|---------|------------|---------|----|-----------|------|------|-----------|-----------|------------|-------|-------|-----|-----|---------|-----|-----|-----|----------|----------|-----------|-----------|-----------|-----------|-----------|-----------|------|------|------|------|------|------|
+|0|Magic Ship|19.700000762939453|40.76514434814453|2.2187983989715576|1452962280|190.5|26.0|6.300000190734863|0.6005255579948425|2307.28173828125|4331.8291015625|0.6548883318901062|2|96|0|true|183.75|Passenger/Ro-Ro Cargo Ship|FE|500|514|18006.0|3420.0|21.399999618530273|166|166|0|2|0|0.0|0.0|0.0|13412.695|1038.0|0.33165503|0.33165503|517.04|517.04|12.984299|12.912785|0.074139796|0.005737632|115.581665|8.944792|2.902574|0.22339118\
+
+
