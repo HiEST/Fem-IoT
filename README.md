@@ -49,9 +49,10 @@ TODO: Some intro
 
 #### Data format
 
-TODO: Define input CSVs
-
 ##### Input format
+
+There are two types of data input: AIS messages and ship registry data. Both
+data inputs are described below.
 
 ###### AIS
 The input data should contain the following attributes obtained from AIS
@@ -234,6 +235,8 @@ The results show aggregations of the emissions by day, day of the week, week and
 
 Depending on which model is used (STEAM or STEAM2), the output will be
 different. In the following subsections we define the output for each model.
+Notice that there are some shared attributes with the input. This is done for
+validation purposes.
 
 #### STEAM
 
@@ -330,6 +333,6 @@ different. In the following subsections we define the output for each model.
 
 |imo|nombre|sog|latitude|longitude|time|l|b|t|qpc|wet_surf_k|wet_surf_a3|cr_nofn|n_screw|n_cabin|n_ref_teu|design_draft|waterline|type|hermes_type|me_rpm|ae_rpm|inst_pow_me|inst_pow_ae|design_speed|sfoc_me|sfoc_ae|nulls|model|last_move|d_lat|d_lon|amp_v|trans_p_me|trans_p_ae|sox_fact_me|sox_fact_ae|co2_fact_me|co2_fact_ae|nox_fact_me|nox_fact_ae|sox_me|sox_ae|co2_me|co2_ae|nox_me|nox_ae|
 |---|------|---|--------|---------|----|-|-|-|---|----------|-----------|-------|-------|-------|---------|------------|---------|----|-----------|------|------|-----------|-----------|------------|-------|-------|-----|-----|---------|-----|-----|-----|----------|----------|-----------|-----------|-----------|-----------|-----------|-----------|------|------|------|------|------|------|
-|0|Magic Ship|19.700000762939453|40.76514434814453|2.2187983989715576|1452962280|190.5|26.0|6.300000190734863|0.6005255579948425|2307.28173828125|4331.8291015625|0.6548883318901062|2|96|0|true|183.75|Passenger/Ro-Ro Cargo Ship|FE|500|514|18006.0|3420.0|21.399999618530273|166|166|0|2|0|0.0|0.0|0.0|13412.695|1038.0|0.33165503|0.33165503|517.04|517.04|12.984299|12.912785|0.074139796|0.005737632|115.581665|8.944792|2.902574|0.22339118\
+|0|Magic Ship|19.700000762939453|40.76514434814453|2.2187983989715576|1452962280|190.5|26.0|6.300000190734863|0.6005255579948425|2307.28173828125|4331.8291015625|0.6548883318901062|2|96|0|true|183.75|Passenger/Ro-Ro Cargo Ship|FE|500|514|18006.0|3420.0|21.399999618530273|166|166|0|2|0|0.0|0.0|0.0|13412.695|1038.0|0.33165503|0.33165503|517.04|517.04|12.984299|12.912785|0.074139796|0.005737632|115.581665|8.944792|2.902574|0.22339118|
 
 
