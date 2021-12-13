@@ -1,14 +1,16 @@
-# Fem-IoT
-FemIoT repo for WP5
+# Fem-IoT: T5.3 Ship emission and power estimation
 
+## Background
 
-## Emission application
+This application is a dockerized implementation of the STEAM and STEAM2
+methodologies defined by Jalkanene (2009,2012). The application uses data from
+the Automatic Identification System (AIS), a system that was envisioned for
+collision avoidance. This system provides a stream of data containing several
+variables like speed and latitude-longitude. Using this data, along with a ship
+register that contains details on the ship engine, we are able to compute how
+much is the ship polluting at each point.
 
-### Background
-
-TODO: Add technical background
-
-### Technical details
+## Technical details
 
 This application computes the emissions produced by the ships given as input.
 The defaulta parameters are defined in the code and in the `runpipe.sh` file.
@@ -26,15 +28,17 @@ the emission summaries in csv and lineplots.
 
 ## Container infrastructure and data
 
-TODO: Describe the two ways of working with the application.
+This application is build to work along a HDFS system, either provided by a
+local or remote infrastructure. In this project there is a local docker-based
+HDFS server provided in case that it is required.
 
-### Building the container
+## Building the container
 
 ```
 docker build -t fem-iot .
 ```
 
-### Build and run the testing framework
+## Build and run the testing framework
 Inside of `docker_hadoop` folder:
 ```
 docker-compose up
@@ -43,18 +47,21 @@ docker-compose up
 Notice that it will take a while to boot.
 
 
-### Data setup 
+## Data setup 
 
-TODO: Some intro
+This section defines which attributes should Ship Registry and AIS data have. In
+of the Ship registry data, there are some attributes that require preprocessing
+and others that are generated from a process. Please check the `preprocess`
+folder to find the script that processes all the data.
 
-#### Data format
+### Data format
 
-##### Input format
+#### Input format
 
 There are two types of data input: AIS messages and ship registry data. Both
 data inputs are described below.
 
-###### AIS
+##### AIS
 The input data should contain the following attributes obtained from AIS
 messages:
 
@@ -90,7 +97,7 @@ Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
 | Magic Ship | 0   | 33   | 20     | 170    | 5      | 20     | 190    | 25    | 5.5     | 19.8 | 358 | 0   | 356     | 0         | 60                 | 40.7606616666667 | 2.21904   | 2016-01-16 16:37:11 |
 
 
-###### Ship registry data
+##### Ship registry data
 
 Ship registry data should contain the following attributes:
 
@@ -156,7 +163,7 @@ Ship registry data should contain the following attributes:
 |---|----|----|---------|------|--------|---|---|-|-|-|---|---|--|--|-----------|------|-----------|---------|-------------|--------|-----------|------------|---------|-------|-----------|------------------|------|-------|------|------|------|------------|----------|---------|---------------|------------|------------|---------|------|------|----------------|-----------|-----------|---------|------------|------------|-----------------|-----------------|---------|--|-----------|----------|-------|---|
 |0|Magic Ship|Passenger/Ro-Ro Cargo Ship|4|500|180|190.5|177|190.5|26|6.3|183.75|183.75|6.3|6.3|TRUE|2|18006|3|9003|Oil|3420|21.4|0|96|14404.8|7202.4|514|2|2|2|2|TRUE|2010|LG|FALSE|NA|7830|4|NA|5840|LNG|FE|Passenger|MSD|166|166|260|220|183.75|4.87587943144907|4331.82903|2307.28172268374|0.654888360161353|0.600525575478299|
 
-##### Output format
+#### Output format
 
 |imo|nombre|sog|latitude|longitude|time|type|hermes_type|me_rpm|ae_rpm|inst_pow_me|inst_pow_ae|design_speed|sfoc_me|sfoc_ae|last_move|d_lat|d_lon|amp_v|trans_p_me|trans_p_ae|sox_fact_me|sox_fact_ae|co2_fact_me|co2_fact_ae|nox_fact_me|nox_fact_ae|sox_me|sox_ae|co2_me|co2_ae|nox_me|nox_ae|
 |---|------|---|--------|---------|----|----|-----------|------|------|-----------|-----------|------------|-------|-------|---------|-----|-----|-----|----------|----------|-----------|-----------|-----------|-----------|-----------|-----------|------|------|------|------|------|------|
@@ -164,7 +171,7 @@ Ship registry data should contain the following attributes:
 
 
 
-#### Standalone
+### Standalone
 
 Copy the `../test_data/` CSVs into the desired HDFS path. For example:
 ```
@@ -175,7 +182,7 @@ AIS="hdfs:///user/ubuntu/emis_femiot/data/anon_2016-01.csv"
 **Make sure that this and the output folders exists before running.**
 
 
-#### With the testing framework
+### With the testing framework
 
 ```
 docker exec datanode mkdir /data
