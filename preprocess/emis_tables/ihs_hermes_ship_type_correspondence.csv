@@ -1,0 +1,42 @@
+ShiptypeLevel4,hermes_code
+Bitumen Tanker,LC
+Bulk Carrier,DC
+Bulk/Oil Carrier,DC
+Cable Layer,OT
+Cement Carrier,DC
+Chemical Tanker,LC
+Chemical/Oil Products Tanker,LC
+Container Ship,CC
+Crude Oil Tanker,LC
+Fish Carrier,OT
+Fishing Support Vessel,OT
+Fishing Vessel,OT
+"FPSO (Floating, Production, Storage, Offloading)",OT
+General Cargo Ship,GC
+Heavy Load Carrier,GC
+Hopper Dredger,OT
+Livestock Carrier,GC
+LNG Tanker,LC
+LPG Tanker,LC
+Naval/Naval Auxiliary,OC
+Offshore Tug/Supply Ship,TU
+Oil Products Tanker,LC
+Ore Carrier,DC
+Passenger (Cruise) Ship,CR
+Passenger Ship,FE
+Passenger/Ro-Ro Cargo Ship,FE
+Refrigerated Cargo Ship,GC
+Research Vessel,OT
+Ro-Ro Cargo Ship,RO
+Sail Training Ship,OT
+Search & Rescue Vessel,OT
+Self Discharging Bulk Carrier,DC
+Supply Tender,OT
+Training Ship,OT
+Tug,TU
+Utility Vessel,OT
+Vegetable Oil Tanker,LC
+Vehicles Carrier,RO
+Wood Chips Carrier,DC
+Yacht,OT
+

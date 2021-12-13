@@ -1,0 +1,91 @@
+ship_type,engine_type,fuel_type,percentage,probability
+Liquid bulk ships,SSD,MDO,0.87,0.0087
+Liquid bulk ships,SSD,BFO,74.08,0.7408
+Liquid bulk ships,MSD,MDO,3.17,0.0317
+Liquid bulk ships,MSD,BFO,20.47,0.2047
+Liquid bulk ships,HSD,MDO,0.52,0.0052
+Liquid bulk ships,HSD,BFO,0.75,0.0075
+Liquid bulk ships,GT,MDO,0,0
+Liquid bulk ships,GT,BFO,0.14,0.0014
+Liquid bulk ships,ST,MDO,0,0
+Liquid bulk ships,ST,BFO,0,0
+Dry bulk carriers,SSD,MDO,0.37,0.0037
+Dry bulk carriers,SSD,BFO,91.63,0.9163
+Dry bulk carriers,MSD,MDO,0.63,0.0063
+Dry bulk carriers,MSD,BFO,7.29,0.0729
+Dry bulk carriers,HSD,MDO,0.06,0.0006
+Dry bulk carriers,HSD,BFO,0.02,0.0002
+Dry bulk carriers,GT,MDO,0,0
+Dry bulk carriers,GT,BFO,0,0
+Dry bulk carriers,ST,MDO,0,0
+Dry bulk carriers,ST,BFO,0,0
+Container,SSD,MDO,1.23,0.0123
+Container,SSD,BFO,92.98,0.9298
+Container,MSD,MDO,0.11,0.0011
+Container,MSD,BFO,5.56,0.0556
+Container,HSD,MDO,0.03,0.0003
+Container,HSD,BFO,0.09,0.0009
+Container,GT,MDO,0,0
+Container,GT,BFO,0,0
+Container,ST,MDO,0,0
+Container,ST,BFO,0,0
+General cargo,SSD,MDO,0.36,0.0036
+General cargo,SSD,BFO,44.59,0.4459
+General cargo,MSD,MDO,8.48,0.0848
+General cargo,MSD,BFO,41.71,0.4171
+General cargo,HSD,MDO,4.3,0.043
+General cargo,HSD,BFO,0.45,0.0045
+General cargo,GT,MDO,0,0
+General cargo,GT,BFO,0.1,0.001
+General cargo,ST,MDO,0,0
+General cargo,ST,BFO,0,0
+Ro Ro cargo,SSD,MDO,0.17,0.0017
+Ro Ro cargo,SSD,BFO,20.09,0.2009
+Ro Ro cargo,MSD,MDO,9.86,0.0986
+Ro Ro cargo,MSD,BFO,59.82,0.5982
+Ro Ro cargo,HSD,MDO,5.57,0.0557
+Ro Ro cargo,HSD,BFO,2.23,0.0223
+Ro Ro cargo,GT,MDO,2.27,0.0227
+Ro Ro cargo,GT,BFO,0,0
+Ro Ro cargo,ST,MDO,0,0
+Ro Ro cargo,ST,BFO,0,0
+Passenger,SSD,MDO,0,0
+Passenger,SSD,BFO,3.81,0.0381
+Passenger,MSD,MDO,5.68,0.0568
+Passenger,MSD,BFO,76.98,0.7698
+Passenger,HSD,MDO,3.68,0.0368
+Passenger,HSD,BFO,1.76,0.0176
+Passenger,GT,MDO,4.79,0.0479
+Passenger,GT,BFO,3.29,0.0329
+Passenger,ST,MDO,0,0
+Passenger,ST,BFO,0.02,0.0002
+Fishing,SSD,MDO,0,0
+Fishing,SSD,BFO,0,0
+Fishing,MSD,MDO,84.42,0.8442
+Fishing,MSD,BFO,3.82,0.0382
+Fishing,HSD,MDO,11.76,0.1176
+Fishing,HSD,BFO,0,0
+Fishing,GT,MDO,0,0
+Fishing,GT,BFO,0,0
+Fishing,ST,MDO,0,0
+Fishing,ST,BFO,0,0
+Others,SSD,MDO,0.48,0.0048
+Others,SSD,BFO,30.14,0.3014
+Others,MSD,MDO,29.54,0.2954
+Others,MSD,BFO,19.63,0.1963
+Others,HSD,MDO,16.67,0.1667
+Others,HSD,BFO,2.96,0.0296
+Others,GT,MDO,0.38,0.0038
+Others,GT,BFO,0.2,0.002
+Others,ST,MDO,0,0
+Others,ST,BFO,0,0
+Tugs,SSD,MDO,0,0
+Tugs,SSD,BFO,0,0
+Tugs,MSD,MDO,39.99,0.3999
+Tugs,MSD,BFO,6.14,0.0614
+Tugs,HSD,MDO,52.8,0.528
+Tugs,HSD,BFO,0.78,0.0078
+Tugs,GT,MDO,0.28,0.0028
+Tugs,GT,BFO,0,0
+Tugs,ST,MDO,0,0
+Tugs,ST,BFO,0,0
