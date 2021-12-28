@@ -210,7 +210,7 @@ hdfs dfs -put /data/*.csv /data/
 
 You should input the parameters in the following way:
 ```
-docker run --name fem-iot -it --network=femiot --ip 172.15.1.05 fem-iot /bin/bash
+docker run --name fem-iot -it --network=femiot --ip 172.15.1.15 fem-iot /bin/bash
 ./runpipe.sh HDFS_SERVER="ServerURL" IHS="IHSFile" AIS="AISFile" TMP="TMPFolder" OUT="OUTFolder
 ```
 
