@@ -10,10 +10,10 @@ fp <- "calc_emis/emis_STEAM_94300f8bf795471c9fbd99f2a3011435.csv/part-00000-f1d6
 
 pollutant_histogram <- function(df2) {
     df2 %>%
-        group_by(pollutant) %>%
-        summarise(grams = sum(grams)) %>%
-        ggplot(aes(x = pollutant, y = grams)) +  geom_col(position = "dodge") + 
-            ggtitle("Amount of emissions per pollutant")
+        group_by(contaminant) %>%
+        summarise(Kg = sum(grams)) %>%
+        ggplot(aes(x = contaminant, y = Kg)) +  geom_col(position = "dodge") + 
+            ggtitle("Quantitat d'emissió per contaminant")
 }
 
 df <- readr::read_csv(fp) %>%
@@ -23,14 +23,14 @@ df <- readr::read_csv(fp) %>%
 
 # Preprocess
 pvt <- df %>% 
-    pivot_longer(c(NOx, SOx, CO2), names_to = "pollutant", values_to = "grams")
+    pivot_longer(c(NOx, SOx, CO2), names_to = "contaminant", values_to = "grams")
 
 
 
 # Pollutants - Plot and aggregation
 
 pvt %>%
-    group_by(pollutant) %>%
+    group_by(contaminant) %>%
     summarise(sum=sum(grams), max=max(grams), mean=mean(grams)) %T>%
     readr::write_csv("agg_pollution.csv")
 
