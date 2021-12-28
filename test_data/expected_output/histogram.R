@@ -16,25 +16,32 @@ pollutant_histogram <- function(df2) {
             ggtitle("Amount of emissions per pollutant")
 }
 
-df <- readr::read_csv(fp)
+df <- readr::read_csv(fp) %>%
+    mutate(NOx = nox_me + nox_ae, SOx = sox_me + sox_ae, CO2 = co2_me + co2_ae) %>%
+    mutate(NOx = NOx/60, SOx = SOx/60, CO2 = CO2/60) %>% # Unit change, g/h.
+    mutate(trans_p_ae = trans_p_ae/60)                   # Unit change, kWh
 
 # Preprocess
-df2 <- df %>% 
-    mutate(NOx = nox_me + nox_ae, SOx = sox_me + sox_ae, CO2 = co2_me + co2_ae) %>%
-    pivot_longer(c(NOx, SOx, CO2), names_to = "pollutant", values_to = "grams") %>%
-    mutate(grams = grams/6) # Unit change, 10 seconds sampling
+pvt <- df %>% 
+    pivot_longer(c(NOx, SOx, CO2), names_to = "pollutant", values_to = "grams")
 
 
 
-# Plot and aggregation
+# Pollutants - Plot and aggregation
 
-df2 %>%
+pvt %>%
     group_by(pollutant) %>%
     summarise(sum=sum(grams), max=max(grams), mean=mean(grams)) %T>%
     readr::write_csv("agg_pollution.csv")
 
-df2 %>%
+pvt %>%
     pollutant_histogram %T>%
     ggsave(file="pollutant_histogram.png" , width=4, height=4)
 
 
+# Power consumption at port - aggregation
+
+df %>%
+    filter(sog <= 0.5) %>%
+    summarise(AuxPowPort=sum(trans_p_ae)) %>%
+    readr::write_csv("agg_power_ae.csv")
