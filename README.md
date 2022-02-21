@@ -204,7 +204,7 @@ hdfs dfs -put /data/*.csv /data/
 
 - `HDFS_SERVER`: HDFS server endpoint. Example: "hdfs://172.15.1.10:9000"
 - `IHS`: Path to the IHS dataset inside of HDFS. Example: "hdfs:///data/anon_ihs_test.csv"
-- `AIS`: Path to the IHS dataset inside of HDFS. Example: "hdfs:///data/anon_2016-01.csv"
+- `AIS`: Path to the AIS dataset inside of HDFS. Example: "hdfs:///data/anon_2016-01.csv"
 - `TMP`: Path for the intermediate calculations. Example: "hdfs:///data/calc/"
 - `OUT`: Path where the output is stored. Example: "hdfs:///data/calc_emis"
 
