@@ -12,14 +12,18 @@ pollutant_histogram <- function(df2) {
     df2 %>%
         group_by(contaminant) %>%
         summarise(Kg = sum(grams)) %>%
-        ggplot(aes(x = contaminant, y = Kg)) +  geom_col(position = "dodge") + 
+        ggplot(aes(x = contaminant, y = Kg)) +  geom_col(position = "dodge") +
+            scale_y_continuous(trans='log2') +
+            ylab("Kg (log)") +
             ggtitle("Quantitat d'emissió per contaminant")
 }
 
 df <- readr::read_csv(fp) %>%
     mutate(NOx = nox_me + nox_ae, SOx = sox_me + sox_ae, CO2 = co2_me + co2_ae) %>%
-    mutate(NOx = NOx/60, SOx = SOx/60, CO2 = CO2/60) %>% # Unit change, g/h.
-    mutate(trans_p_ae = trans_p_ae/60)                   # Unit change, kWh
+    # Unit change, g/h.
+    mutate(NOx = NOx/60, SOx = SOx/60, CO2 = CO2/60) %>%
+    # Unit change, kWh
+    mutate(trans_p_ae = trans_p_ae/60)
 
 # Preprocess
 pvt <- df %>% 
@@ -45,3 +49,13 @@ df %>%
     filter(sog <= 0.5) %>%
     summarise(AuxPowPort=sum(trans_p_ae)) %>%
     readr::write_csv("agg_power_ae.csv")
+
+
+# Result table subset
+df %>%
+    head(10) %>%
+    #sample_n(10) %>%
+    arrange(time) %>%
+    select(time, sog, latitude, longitude, sfoc_me, sox_me, nox_me, co2_me) %T>%
+    readr::write_csv("out_sample.csv")
+
