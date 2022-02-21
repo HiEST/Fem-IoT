@@ -151,7 +151,7 @@ Ship registry data should contain the following attributes:
 - steam_sfocbase_me: Specific Fuel Oil Consumtion for Main Engine following STEAM methodology (g/kWh)
 - steam_sfocbase_ae: Specific Fuel Oil Consumtion for Auxiliary Engine following STEAM methodology (g/kWh)
 - waterline: Waterline length (meters)
-- dp
+- dp: Propeller diameter
 - wet_surf_a3: Wet surface a3 coefficient following Hollenbach 1998 approach
 - wet_surf_k: Wet surface k coefficient following Hollenbach 1998 approach
 - cr_nofn: Resistance coefficient without Froude Number following Hollenbach 1998 approach
