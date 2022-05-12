@@ -1,36 +1,34 @@
+
+<div style="text-align: center;" markdown="1">
+  <a href="https://femiot.cat"><img src="https://patrons.bsc.es/images/Logo_FemIoT.png" height="100" alt="FemIoT Logo" /></a>&nbsp;&nbsp;
+  <a href="https://www.bsc.es"><img src="https://patrons.bsc.es/images/bsc_logo_black.png" height="100" alt="BSC Logo" /></a>
+</div>
+
+**Valorization of the IoT Data** - This project has the objective of design and develop the platform to give value to IoT data from FemIoT project in a federated way across the participants, integrating large volume of data and unify hardware and software standards.
+
+This repository focuses on Task 5.3 **Ship Emission and Power Estimation**, leaded by the Data-Centric Computing group at the **Barcelona Supercomputing Center**, on maritime traffic emission and power estimation from AIS data traces.
+
 # Fem-IoT: T5.3 Ship emission and power estimation
 
 ## Background
 
-This application is a dockerized implementation of the STEAM and STEAM2
-methodologies defined by Jalkanene (2009,2012). The application uses data from
-the Automatic Identification System (AIS), a system that was envisioned for
-collision avoidance. This system provides a stream of data containing several
-variables like speed and latitude-longitude. Using this data, along with a ship
-register that contains details on the ship engine, we are able to compute how
-much is the ship polluting at each point.
+This application is a dockerized implementation of the STEAM and STEAM2 methodologies defined by Jalkanen (2009,2012). The application uses data from the Automatic Identification System (AIS), a system that was envisioned for collision avoidance. This system provides a stream of data containing several variables like speed and latitude-longitude. Using this data, along with a ship register that contains details on the ship engine, we are able to compute how much is the ship polluting at each point.
 
 ## Technical details
 
-This application computes the emissions produced by the ships given as input.
-The defaulta parameters are defined in the code and in the `runpipe.sh` file.
+This application computes the emissions produced by the ships given as input. The defaulta parameters are defined in the code and in the `runpipe.sh` file.
 
-The sample gaps are interpolated if there are two samples in, at least, 15
-minutes. If there are gaps that are greater, the samples are not interpolated in
-between. We interpolate a sample each 10 seconds.
+The sample gaps are interpolated if there are two samples in, at least, 15 minutes. If there are gaps that are greater, the samples are not interpolated in between. We interpolate a sample each 10 seconds.
 
 The input data and the result output path is stored in the CSV path defined in `runpipe.sh`.
 
 Run using app/runpipe.sh inside the docker machine.
 
-At the end of the execution, a folder named **output** is created, containing
-the emission summaries in csv and lineplots.
+At the end of the execution, a folder named **output** is created, containing the emission summaries in csv and lineplots.
 
 ## Container infrastructure and data
 
-This application is build to work along a HDFS system, either provided by a
-local or remote infrastructure. In this project there is a local docker-based
-HDFS server provided in case that it is required.
+This application is build to work along a HDFS system, either provided by a local or remote infrastructure. In this project there is a local docker-based HDFS server provided in case that it is required.
 
 ## Building the container
 
@@ -49,21 +47,16 @@ Notice that it will take a while to boot.
 
 ## Data setup 
 
-This section defines which attributes should Ship Registry and AIS data have. In
-of the Ship registry data, there are some attributes that require preprocessing
-and others that are generated from a process. Please check the `preprocess`
-folder to find the script that processes all the data.
+This section defines which attributes should Ship Registry and AIS data have. In of the Ship registry data, there are some attributes that require preprocessing and others that are generated from a process. Please check the `preprocess` folder to find the script that processes all the data.
 
 ### Data format
 
 #### Input format
 
-There are two types of data input: AIS messages and ship registry data. Both
-data inputs are described below.
+There are two types of data input: AIS messages and ship registry data. Both data inputs are described below.
 
 ##### AIS
-The input data should contain the following attributes obtained from AIS
-messages:
+The input data should contain the following attributes obtained from AIS messages:
 
 
 - nombre: Ship's name
@@ -81,16 +74,14 @@ messages:
 - rot: Current rotation (degrees)
 - heading: Ships true heading (degrees)
 - navstatus: Navigational status (e.g. Underway using engine)
-- typeofshipandcargo: Type of ship and cargo being transported. Check the types
-  [here](https://api.vtexplorer.com/docs/ref-aistypes.html)
+- typeofshipandcargo: Type of ship and cargo being transported. Check the types [here](https://api.vtexplorer.com/docs/ref-aistypes.html)
 - latitude: Current latitude (degrees)
 - longitude: Current longitude (degrees)
 - fechahora: Timestamp. Format: YYYY-MM-DD hh:mm:ss
 
 ![Size disposition](doc/ship_dimen.gif)
 
-Size attributes (A,B,C and D) in AIS messages. International Telecommunications
-Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
+Size attributes (A,B,C and D) in AIS messages. International Telecommunications Union Recommendation [ITU-R M.1371-5](https://www.itu.int/rec/R-REC-M/e).
 
 | nombre     | imo | mmsi | size_a | size_b | size_c | size_d | eslora | manga | draught | sog  | cog | rot | heading | navstatus | typeofshipandcargo | latitude         | longitude | fechahora           |
 | ------     | --- | ---- | ------ | ------ | ------ | ------ | ------ | ----- | ------- | ---  | --- | --- | ------- | --------- | ------------------ | --------         | --------- | ---------           |
@@ -221,9 +212,7 @@ With the example infrastructure:
 
 ### Running without network
 
-If you want to use the standalone mode, the only thing that changes is the
-docker run itself. The files should point to somewhere in the container's
-filesystem.
+If you want to use the standalone mode, the only thing that changes is the docker run itself. The files should point to somewhere in the container's filesystem.
 
 ```
 docker run --name fem-iot -it fem-iot /bin/bash
@@ -232,18 +221,13 @@ docker run --name fem-iot -it fem-iot /bin/bash
 
 ## Output
 
-After executing `runpipe.sh` the resulting emissions will be available in the
-folder configured as output (`OUT`) folder. The plots will be available in
-`output/plot`. 
+After executing `runpipe.sh` the resulting emissions will be available in the folder configured as output (`OUT`) folder. The plots will be available in `output/plot`. 
 
 The results show aggregations of the emissions by day, day of the week, week and month.
 
 ### Output data format
 
-Depending on which model is used (STEAM or STEAM2), the output will be
-different. In the following subsections we define the output for each model.
-Notice that there are some shared attributes with the input. This is done for
-validation purposes.
+Depending on which model is used (STEAM or STEAM2), the output will be different. In the following subsections we define the output for each model. Notice that there are some shared attributes with the input. This is done for validation purposes.
 
 #### STEAM
 
@@ -343,3 +327,12 @@ validation purposes.
 |0|Magic Ship|19.700000762939453|40.76514434814453|2.2187983989715576|1452962280|190.5|26.0|6.300000190734863|0.6005255579948425|2307.28173828125|4331.8291015625|0.6548883318901062|2|96|0|true|183.75|Passenger/Ro-Ro Cargo Ship|FE|500|514|18006.0|3420.0|21.399999618530273|166|166|0|2|0|0.0|0.0|0.0|13412.695|1038.0|0.33165503|0.33165503|517.04|517.04|12.984299|12.912785|0.074139796|0.005737632|115.581665|8.944792|2.902574|0.22339118|
 
 
+# Acknowledgements
+
+El projecte FemIoT amb número d'expedient 001-P-001662 ha estat cofinançat en un 50% amb 1.997.659,60€ pel Fons Europeu de Desenvolupament Regional de la Unió Europea en el marc de el Programa Operatiu FEDER de Catalunya 2014-2020, amb el suport de la Generalitat de Catalunya.
+
+El proyecto FemIoT con número de expediente 001-P-001662 ha sido cofinanciado en un 50% con 1.997.659,60€ por el Fondo Europeo de Desarrollo Regional de la Unión Europea en el marco del Programa Operativo FEDER de Cataluña 2014-2020, con el soporte de la Generalitat de Catalunya.
+
+The FemIoT project with expedient number 001-P-001662 has been 50% co-financed with 1.997.659,60€ by the European Fund for Regional Development of the European Union within the framework of the 2014-2020 ERDF Operational Program of Catalonia, with the support of the Generalitat of Catalonia.
+
+<img src="https://patrons.bsc.es/images/logo_ue.png" width="284" height="40" alt="EU_ERDF_Funding_Logo" /> <img src="https://patrons.bsc.es/images/logo_dru.png" width="188" height="40" alt="GenCat_DRU_Funding_Logo" />
